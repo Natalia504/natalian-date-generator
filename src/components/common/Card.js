@@ -5,7 +5,6 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 
 
 const styles = {
@@ -47,20 +46,17 @@ function SimpleCard(props) {
   return (
     <Card className={classes.card}>
       <CardContent>
-        <Typography variant="h5">
-          You are in <strong>{location}</strong>.
-        </Typography>
-        <Typography variant="h5">
-          Your budget is <strong>{renderDisplay(price)}</strong>.
-        </Typography>
-        <Typography variant="h5">
-          You would like to start at <strong>{renderDisplay(start)}</strong>.
-        </Typography>
+        You are in <strong>{location}</strong>.
+        <br />
+        Your budget is <strong>{renderDisplay(price)}</strong>.
+        <br />
+        You would like to start at <strong>{renderDisplay(start)}</strong>.
+        <br />
       </CardContent>
       <CardActions>
-        <Button variant="extendedFab" aria-label="Delete" className={classes.button}>
-          Generate
-        </Button>
+        <Button variant="contained" color="secondary" className={classes.button}>
+        Generate
+      </Button>
       </CardActions>
     </Card>
   );

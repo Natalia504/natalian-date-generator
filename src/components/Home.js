@@ -5,7 +5,6 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import TextField from './common/TextField';
 import ControlledOpenSelect from './common/Select';
 import SimpleCard from './common/Card';
@@ -84,7 +83,7 @@ class Home extends React.Component {
     // console.log(this.state, "state");
 
     return (
-      <div className={classes.root}>
+      <div className={classes.root} >
         <Stepper activeStep={activeStep} alternativeLabel>
           {steps.map(label => {
             return (
@@ -97,18 +96,16 @@ class Home extends React.Component {
         <div>
           {this.state.activeStep === steps.length ? (
             <div>
-              <Typography className={classes.instructions}>
-                <SimpleCard
-                  location={this.state.location}
-                  price={this.state.price}
-                  start={this.state.start}
-                />
-              </Typography>
+              <SimpleCard
+                location={this.state.location}
+                price={this.state.price}
+                start={this.state.start}
+              />
               <Button onClick={this.handleReset}>Reset</Button>
             </div>
           ) : (
             <div>
-              <Typography className={classes.instructions} >{getStepContent(activeStep, this.handleChange)}</Typography>
+              {getStepContent(activeStep, this.handleChange)}
               <div>
                 <Button
                   disabled={activeStep === 0}

@@ -22,22 +22,19 @@ class ControlledOpenSelect extends React.Component {
 
   render() {
     const { classes, handleChange } = this.props;
-    // console.log(this.props, "props");
 
     return (
       <form autoComplete="off">
         <FormControl className={classes.formControl}>
           <InputLabel htmlFor="demo-controlled-open-select">{this.props.label}</InputLabel>
           <Select
-            value={this.props.value}
+            value={this.props.options}
             onChange={handleChange}
             name={this.props.name}
             id='demo-controlled-open-select'
-
           >
-
-            {this.props.options.map(option => {
-              return <MenuItem value={option.value}>{option.display}</MenuItem>
+            {this.props.options.map((option, index) => {
+              return <MenuItem key={index} value={option.value}>{option.display}</MenuItem>
             })}
           </Select>
         </FormControl>
