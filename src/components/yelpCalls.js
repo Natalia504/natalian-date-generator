@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import 'dotenv/config';
-// import Button from '@material-ui/core/Button';
 
-
-// const apiKey='iJLvp6Ks9Mgq8KutYmvIeR_tgDTyrczgYZf93-6S6TO51EDuxtrS1_En2kSYaQkpmWqpWvGB7Loc5Tykj0BOfWyizLMzgtTTAoac_S8JLkyXz6xN6k3BgeizChYCXHYx';
+const apiKey='iJLvp6Ks9Mgq8KutYmvIeR_tgDTyrczgYZf93-6S6TO51EDuxtrS1_En2kSYaQkpmWqpWvGB7Loc5Tykj0BOfWyizLMzgtTTAoac_S8JLkyXz6xN6k3BgeizChYCXHYx';
 
 class YelpCalls extends Component {
   constructor(){
@@ -13,18 +12,19 @@ class YelpCalls extends Component {
     }
   }
 
-  // componentDidMount = () => {
-  //
-  //   return fetch('https://api.yelp.com/v3/businesses/north-india-restaurant-san-francisco', {
-  //     method: 'GET',
-  //     contentType:"application/json",
-  //     headers: {'Authorization': 'Bearer ' + apiKey},
-  //     mode: 'no-cors'
-  //   })
-  //     .then(res => {
-  //
-  //     })
-  // }
+  componentDidMount = () => {
+    return axios({
+      method: 'GET',
+      url: 'https://api.yelp.com/v3/businesses/north-india-restaurant-san-francisco',
+      headers: {
+        'Access-Control-Allow-Origin': 'https://api.yelp.com/v3/',
+        Authorization: `Bearer ${apiKey}`
+      },
+    })
+      .then(res => console.log(res));
+  }
+
+
 
   render() {
     return(
