@@ -1,1 +1,1 @@
-export const LOAD_EVENTS = 'LOAD_EVENTS';
+export const GET_THINGS_SUCCESS = 'GET_THINGS_SUCCESS';
