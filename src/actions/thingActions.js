@@ -1,5 +1,5 @@
 import { GET_THINGS_SUCCESS } from '../actions/constants';
-import thingApi from '../api/thingApi';
+import { getThings } from '../api/thingApi';
 
 export function getThingsSuccess(things) {
   return {
@@ -10,7 +10,7 @@ export function getThingsSuccess(things) {
 
 export function loadThings(things) {
   return function(dispatch) {
-    return thingApi.getThings()
+    return getThings()
       .then(things => {
         dispatch(getThingsSuccess(things));
       });

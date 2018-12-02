@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -54,9 +55,11 @@ function SimpleCard(props) {
         <br />
       </CardContent>
       <CardActions>
-        <Button variant="contained" color="secondary" className={classes.button}>
-        Generate
-      </Button>
+        <Link to='/date'>
+          <Button variant="contained" color="secondary" className={classes.button}>
+            Generate
+          </Button>
+        </Link>
       </CardActions>
     </Card>
   );
