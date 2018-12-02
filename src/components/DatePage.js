@@ -6,19 +6,37 @@ import MediaCard from './common/MediaCard';
 
 
 class DatePage extends React.Component {
+  constructor(props){
+    super(props)
+    this.state={
+      
+    }
+  }
 
-  // renderResults = () => {
-  //   this.props.state.map((thing, i) => {
-  //     return <Card thing={thing} />
-  //   })
-  // }
+  renderResults = () =>
+    this.props.state.things.map((thing, i) => {
+      console.log(thing, "one thing");
+      return (<MediaCard
+        key={i}
+        toggle={this.toggleLock}
+        isLocked={thing.locked}
+      />)
+    })
+
+
+  toggleLock = () => {
+    this.setState({isLocked1: !this.state.isLocked1});
+  }
+
+
+
 
   render() {
     console.log(this.props.state, 'state');
 
     return (
       <div>
-        <MediaCard />
+        {this.renderResults()}
       </div>
     );
   }

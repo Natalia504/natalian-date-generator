@@ -13,7 +13,7 @@ export function loadThings(data) {
     return getThings(data)
       .then(results => {
         console.log('results', results);
-        dispatch(getThingsSuccess(results));
+        dispatch(getThingsSuccess(results.things));
       });
   };
 }

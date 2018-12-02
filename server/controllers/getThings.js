@@ -25,11 +25,13 @@ const mapThings = ({ things, location, price, start }) => {
     });
   });
 }
+
 const getThings = async (req, res) => {
   console.log('ROUTE: getThings');
   try {
     const requests = mapThings(req.body);
     const nextThings = await Promise.all(requests);
+    console.log(nextThings.length);
 
     return res.send({ success: true, things: nextThings });
   } catch (err) {

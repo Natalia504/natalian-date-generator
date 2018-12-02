@@ -20,12 +20,8 @@ const styles = {
 };
 
 function MediaCard(props) {
-  const { classes } = props;
-
-  let isLocked=false;
-  const toggleLock = () => {
-    return isLocked = !isLocked;
-  }
+  // console.log(props);
+  const { classes, isLocked, toggle } = props;
 
   return (
     <div style={{margin: '40px'}}>
@@ -46,12 +42,15 @@ function MediaCard(props) {
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <Button  variant="contained" color="primary" className={classes.button}>
-            Locked
-          </Button>
-          <Button  variant="contained" color="primary" className={classes.button}>
-            Lock
-          </Button>
+          {isLocked ?
+            <Button  onClick={toggle} variant="contained" color="primary" className={classes.button}>
+              Locked
+            </Button>
+            :
+            <Button  onClick={toggle} variant="contained" color="primary" className={classes.button}>
+              Lock
+            </Button>
+          }
         </CardActions>
       </Card>
       <div style={{margin: '10px'}}>
