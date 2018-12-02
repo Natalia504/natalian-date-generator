@@ -20,7 +20,7 @@ const styles = {
 };
 
 function SimpleCard(props) {
-  const { classes, location, price, start } = props;
+  const { classes, location, price, start, things } = props;
 
   const renderDisplay = (value) => {
     switch (value) {
@@ -38,9 +38,30 @@ function SimpleCard(props) {
         return "6PM"
       case 7:
         return "7PM"
+      case 8:
+        return "Restaurant"
+      case 9:
+        return "Concert"
+      case 10:
+        return "Park"
       default:
         return 'Uknown';
     }
+  }
+
+  const renderThings = (things) => {
+    // console.log(things);
+    // let result;
+    // for (var i = 0; i < things.length; i++) {
+    //   if (i === things.length - 1) {
+    //     result += '& ' + renderDisplay(things[i])
+    //   } else {
+    //     result += renderDisplay(things[i]) + ', '
+    //   }
+    // }
+    // console.log(result);
+    // return result;
+    return things.map(thing => renderDisplay(thing) + ', ')
   }
 
   return (
@@ -52,9 +73,16 @@ function SimpleCard(props) {
         <br />
         You would like to start at <strong>{renderDisplay(start)}</strong>.
         <br />
+        You are going to <strong>{renderThings(things)}</strong>.
+        <br />
       </CardContent>
       <CardActions>
-        <Button variant="contained" color="secondary" className={classes.button}>
+        <Button
+          variant="contained"
+          color="secondary"
+          className={classes.button}
+          onClick={props.handleGenerate}
+        >
         Generate
       </Button>
       </CardActions>

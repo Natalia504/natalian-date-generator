@@ -1,5 +1,5 @@
 import { GET_THINGS_SUCCESS } from '../actions/constants';
-import thingApi from '../api/thingApi';
+import { getThings } from '../api/thingApi';
 
 export function getThingsSuccess(things) {
   return {
@@ -8,11 +8,12 @@ export function getThingsSuccess(things) {
   };
 }
 
-export function loadThings(things) {
+export function loadThings(data) {
   return function(dispatch) {
-    return thingApi.getThings()
-      .then(things => {
-        dispatch(getThingsSuccess(things));
+    return getThings(data)
+      .then(results => {
+        console.log('results', results);
+        dispatch(getThingsSuccess(results));
       });
   };
 }
