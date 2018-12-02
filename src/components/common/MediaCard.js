@@ -46,10 +46,10 @@ function MediaCard(props) {
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <Button onClick={this.toggleLock} variant="contained" color="primary" className={classes.button}>
+          <Button  variant="contained" color="primary" className={classes.button}>
             Locked
           </Button>
-          <Button onClick={this.toggleLock} variant="contained" color="primary" className={classes.button}>
+          <Button  variant="contained" color="primary" className={classes.button}>
             Lock
           </Button>
         </CardActions>

@@ -28,7 +28,7 @@ class ControlledOpenSelect extends React.Component {
         <FormControl className={classes.formControl}>
           <InputLabel htmlFor="demo-controlled-open-select">{this.props.label}</InputLabel>
           <Select
-            value={this.props.options}
+            value={this.props.value}
             onChange={handleChange}
             name={this.props.name}
             id='demo-controlled-open-select'

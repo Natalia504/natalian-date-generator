@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as thingActions from '../actions/thingActions';
 import { withStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -25,21 +28,60 @@ const styles = theme => ({
 
 const budgetOptions = [{value: 1, display:'$'}, {value: 2, display: '$$'}, { value:3,  display:'$$$'}];
 const timeOptions = [{value: 4, display: '4pm'}, {value: 5, display:'5pm'}, {value: 6, display: '6pm'}, {value: 7, display: '7pm'}];
+const thingOptions = [
+  { value: 8, display: 'Restaurant', data: { type: 'businesses', term: 'restaurants' }},
+  { value: 9, display: 'Cafes', data: { type: 'businesses', term: 'cafes' }},
+  { value: 10, display: 'Bars', data: { type: 'businesses', term: 'bars' }},
+]
 
 function getSteps() {
-  return ['What\'s your location?', 'What\'s your budget?', 'What time do you want to start?'];
+  return ['What\'s your location?', 'What\'s your budget?', 'What time do you want to start?', 'What would you like to do?'];
 }
 
-function getStepContent(stepIndex, handleChange) {
+function getStepContent(stepIndex, handleChange, handleThingChange, handleAddThing, state) {
 
   switch (stepIndex) {
     case 0:
-      return  <TextField handleChange={handleChange} name='location'/>;
+      return  <TextField
+        handleChange={handleChange}
+        name='location'
+      />;
     case 1:
-      return <ControlledOpenSelect handleChange={handleChange} options={budgetOptions} name='price' label='Budget' />;
+      return <ControlledOpenSelect
+        handleChange={handleChange}
+        options={budgetOptions}
+        name='price'
+        label='Budget'
+        value={state.price}
+      />;
     case 2:
-      return <ControlledOpenSelect handleChange={handleChange} options={timeOptions} name='start' label='Time' />;
-
+      return <ControlledOpenSelect
+        handleChange={handleChange}
+        options={timeOptions}
+        name='start'
+        label='Time'
+        value={state.start}
+      />;
+    case 3:
+    return <div>
+        {state.thingValues.map((thing, i) =>
+          <ControlledOpenSelect
+            key={i}
+            handleChange={(event) => handleThingChange(event, i)}
+            options={thingOptions}
+            name='things'
+            label='Activities'
+            value={state.thingValues[i]}
+          />
+        )}
+        <Button
+          disabled={state.things.length > 2}
+          onClick={handleAddThing}
+          // className={classes.button}
+        >
+          Add Activity
+        </Button>
+    </div>;
     default:
       return 'Uknown stepIndex';
   }
@@ -48,10 +90,11 @@ function getStepContent(stepIndex, handleChange) {
 class Home extends React.Component {
   state = {
     activeStep: 0,
-    price:'',
+    price: '',
     start: '',
     location:'',
-    things:[],
+    things: [{}],
+    thingValues: [''],
   };
 
   handleNext = () => {
@@ -75,6 +118,29 @@ class Home extends React.Component {
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
+
+  handleThingChange = (event, i) => {
+    const { value } = event.target;
+    const nextThings = this.state.things;
+    const nextThingValues = this.state.thingValues;
+    nextThings[i] = thingOptions.filter(thing => thing.value === value).pop().data;
+    nextThingValues[i] = value;
+    this.setState({
+      things: nextThings,
+      thingValues: nextThingValues,
+    });
+  };
+
+  handleAddThing = () => {
+    this.setState(prevState => ({
+      things: prevState.things.concat([{}]),
+      thingValues: prevState.thingValues.concat([''])
+    }));
+  }
+
+  handleGenerate = () => {
+    this.props.actions.loadThings(this.state);
+  }
 
   render() {
     const { classes } = this.props;
@@ -100,12 +166,14 @@ class Home extends React.Component {
                 location={this.state.location}
                 price={this.state.price}
                 start={this.state.start}
+                things={this.state.things}
+                handleGenerate={this.handleGenerate}
               />
               <Button onClick={this.handleReset}>Reset</Button>
             </div>
           ) : (
             <div>
-              {getStepContent(activeStep, this.handleChange)}
+              {getStepContent(activeStep, this.handleChange, this.handleThingChange, this.handleAddThing, this.state)}
               <div>
                 <Button
                   disabled={activeStep === 0}
@@ -128,6 +196,21 @@ class Home extends React.Component {
 
 Home.propTypes = {
   classes: PropTypes.object,
+  actions: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Home);
+function mapStateToProps(state, ownProps) {
+  return {
+    state
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(thingActions, dispatch)
+  };
+}
+
+const HomeWithStyles = withStyles(styles)(Home);
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeWithStyles);

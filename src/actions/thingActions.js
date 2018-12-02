@@ -8,11 +8,12 @@ export function getThingsSuccess(things) {
   };
 }
 
-export function loadThings(things) {
+export function loadThings(data) {
   return function(dispatch) {
-    return getThings()
-      .then(things => {
-        dispatch(getThingsSuccess(things));
+    return getThings(data)
+      .then(results => {
+        console.log('results', results);
+        dispatch(getThingsSuccess(results));
       });
   };
 }
